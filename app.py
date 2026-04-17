@@ -1,4 +1,6 @@
 import streamlit as st
+from api_calling import note_generator
+from PIL import Image
 
 st.title("Note Summary and Quiz Generator")
 st.markdown("Upload upto 3 images to generate summaries and quizzes based on the content of the images.")
@@ -49,7 +51,10 @@ if pressed:
             st.subheader("Summary")
             
             #summary
-            st.text("Note")
+            with st.spinner("AI Generating summary..."):
+                pil_images = [Image.open(image) for image in images]
+                generated_note = note_generator(pil_images)
+                st.markdown(generated_note)
 
 
         #audio transcript
