@@ -34,5 +34,39 @@ with st.sidebar:
     else:
         st.error("Please select a quiz difficulty level.")
 
-    st.button("Generate Summary and Quiz",type="primary")
+    pressed = st.button("Generate Summary and Quiz",type="primary")
+
+if pressed:
+    if not images:
+        st.error("Please upload at least one image to generate summary and quiz.")
+    if not selected_option:
+        st.error("Please select a quiz difficulty level to generate quiz.")
+    if images and selected_option:
+
+        #note
+
+        with st.container(border=True):
+            st.subheader("Summary")
+            
+            #summary
+            st.text("Note")
+
+
+        #audio transcript
+        with st.container(border=True):
+            st.subheader("Audio Transcript")
+            
+            #audio
+            st.text("Audio Transcript")
+        
+        #quiz
+        with st.container(border=True):
+            st.subheader("Quiz")
+            
+            #quiz
+            st.text(f"Quiz with {selected_option} difficulty")
+
+
+
+
 
