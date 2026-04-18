@@ -1,6 +1,7 @@
 from google import genai
 from dotenv import load_dotenv
-import os
+import os,io
+from gtts import gTTS
 
 #loading the environment variable
 load_dotenv()
@@ -20,4 +21,21 @@ def note_generator(images):
     )
 
     return response.text if getattr(response, "text", None) else "No summary generated."
+
+ #audio transcript generator
+def audio_transcription(note):
+    note = note.replace("#", "").replace("*", "").replace("_", "").replace("`", "").replace("$", "")
+    speech = gTTS(text=note, lang='en',slow=False)
+    audio_file = io.BytesIO()
+    speech.write_to_fp(audio_file)
+    return audio_file
+
+def quiz_generator(images,difficulty):
+    prompt = f"Generate 3 quizzes based on the {difficulty}. Make sure to add markdown to differentiate the options. Add correct answer too,after the quiz"
+    response = client.models.generate_content( 
+        model = "gemini-3-flash-preview",
+        contents = [*images, prompt],
+    )
+
+    return response.text if getattr(response, "text", None) else "No quiz generated."
 
